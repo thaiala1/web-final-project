@@ -1,3 +1,4 @@
+
 <footer class="footer">
   <div class="footer-container">
     <!-- Cột 1: Logo hoặc hình minh họa -->
@@ -49,4 +50,178 @@
     <p><strong>WEBSITE ĐƯỢC XÂY DỰNG PHỤC VỤ DỰ ÁN MÔN HỌC, KHÔNG THỰC HIỆN KINH DOANH THỰC TẾ</strong></p>
   </div>
 </footer>
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banner Slider</title>
+
+<style>
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* BANNER SLIDER */
+.slider {
+    position: relative;
+    width: 100%;
+    height: 500px; /* ✅ Tăng chiều cao banner */
+    overflow: hidden;
+}
+
+.slides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+    min-width: 100%;
+    height: 500px; /* ✅ Đồng bộ chiều cao */
+    background-size: contain; /* ✅ Không cắt ảnh */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #fff; /* ✅ Chọn màu nền nếu ảnh không full */
+}
+
+/* ARROW BUTTONS */
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 40px;
+    color: #fff;
+    background: rgba(0,0,0,0.2);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 45px;
+    cursor: pointer;
+}
+.arrow:hover {
+    background: rgba(0,0,0,0.5);
+}
+#prev { left: 15px; }
+#next { right: 15px; }
+
+/* DOTS */
+.dots {
+    position: absolute;
+    bottom: 15px;
+    width: 100%;
+    text-align: center;
+}
+.dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin: 0 4px;
+    background: #ddd;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.dot.active {
+    background: #ff4081;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ✅ SLIDER -->
+<div class="slider">
+    <div class="slides">
+
+        <!-- Slide 1 -->
+        <div class="slide" style="background-image:url('pic1.png');"></div>
+
+        <!-- Slide 2 -->
+        <div class="slide" style="background-image:url('pic2.png');"></div>
+
+        <!-- Slide 3 -->
+        <div class="slide" style="background-image:url('pic3.png');"></div>
+
+         <!-- Slide 4 -->
+         <div class="slide" style="background-image:url('pic4.png');"></div>
+
+          <!-- Slide 5 -->
+        <div class="slide" style="background-image:url('pic5.png');"></div>
+
+         <!-- Slide 6 -->
+         <div class="slide" style="background-image:url('pic6.png');"></div>
+
+    </div>
+
+    <!-- ARROWS -->
+    <div id="prev" class="arrow">&#10094;</div>
+    <div id="next" class="arrow">&#10095;</div>
+
+    <!-- DOTS -->
+    <div class="dots"></div>
+</div>
+
+<script>
+/* ====== SLIDER SCRIPT ====== */
+
+const slides = document.querySelector(".slides");
+const slide = document.querySelectorAll(".slide");
+let index = 0;
+
+function showSlide(i) {
+    if (i >= slide.length) index = 0;
+    if (i < 0) index = slide.length - 1;
+
+    slides.style.transform = `translateX(${-index * 100}%)`;
+    updateDots();
+}
+
+/* ARROW EVENTS */
+document.getElementById("next").addEventListener("click", () => {
+    index++;
+    showSlide(index);
+});
+document.getElementById("prev").addEventListener("click", () => {
+    index--;
+    showSlide(index);
+});
+
+/* AUTO PLAY */
+setInterval(() => {
+    index++;
+    showSlide(index);
+}, 6000);
+
+/* DOTS */
+const dotsContainer = document.querySelector(".dots");
+
+slide.forEach((_, i) => {
+    const dot = document.createElement("span");
+    dot.classList.add("dot");
+    dot.addEventListener("click", () => {
+        index = i;
+        showSlide(index);
+    });
+    dotsContainer.appendChild(dot);
+});
+
+function updateDots() {
+    document.querySelectorAll(".dot").forEach((dot, i) => {
+        dot.classList.toggle("active", i === index);
+    });
+}
+
+updateDots();
+</script>
+
+</body>
+</html>
 
